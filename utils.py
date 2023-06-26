@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 from skimage import feature, transform
 from sklearn.feature_extraction.image import PatchExtractor
 

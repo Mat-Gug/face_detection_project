@@ -256,3 +256,42 @@ def detect_faces(img_path,
         selected_scores = scores[y_pred==1][selected_indices]
     
     return selected_boxes, selected_scores
+
+
+def show_bboxes(path, bboxes, scores):
+    """
+    Displays an image with bounding boxes and scores overlaid on detected faces.
+
+    Args:
+        path (str): The path to the image file.
+        bboxes (list): A list of bounding boxes in the format (x, y, x+w, y+h).
+        scores (list): A list of confidence scores corresponding to each bounding box.
+
+    Returns:
+        None
+    """
+    fig, ax = plt.subplots()
+    img = read_and_convert(path)
+    ax.imshow(img, cmap='gray')
+    ax.axis('off')
+
+    for box, score in zip(bboxes, scores):
+        rect = patches.Rectangle((box[0], box[1]),
+                                box[2]-box[0],
+                                box[3]-box[1],
+                                edgecolor='red',
+                                alpha=0.3,
+                                lw=1,
+                                facecolor='none')
+
+        ax.add_patch(rect)
+
+        ax.text(box[0] + 10, box[1] - 10,
+                f"Score: {score:.2f}",
+                color='black',
+                verticalalignment='top',
+                fontsize=7,
+                weight='bold',
+                bbox=dict(facecolor='white', alpha=0.25))
+
+    plt.show()
